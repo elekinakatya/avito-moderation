@@ -112,6 +112,16 @@
 .date {
     color: #666;
 }
+.openButton{
+    position: absolute;
+    right: 15px;
+    bottom: 15px;
+    color: #878787;
+    font-size: 14px;
+}
+.openButton:hover {
+    color: #505050;
+}
 @media (max-width: 900px) {
     .card {
         padding: 12px;

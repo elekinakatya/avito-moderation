@@ -1,5 +1,6 @@
 import styles from "./Card.module.css"
-import type {Ad} from "../../types";
+import type {Ad} from "../../../types";
+import {Link} from "react-router-dom";
 
 interface CardProps {
     ad: Ad;
@@ -67,6 +68,9 @@ export const Card = ({ad}: CardProps)=> {
                         >{getStatusText(ad.status)}
                         </span>
                     </div>
+                    <Link to={`/item/${ad.id}`} className={styles.openButton}>
+                        Открыть →
+                    </Link>
                 </div>
             </div>
         </div>

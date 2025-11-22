@@ -1,89 +1,13 @@
 import styles from "./ListPage.module.css"
-import {Filters} from "../../components/filters/Filters.tsx"
+import {Filters} from "../../components/forList/filters/Filters.tsx"
 import {mockAds} from "../../mocks/data.ts";
-import {Card} from "../../components/card/Card.tsx";
+import {Card} from "../../components/forList/card/Card.tsx";
 import {useMemo, useState} from "react";
-import {SearchBar} from "../../components/searchBar/SearchBar.tsx";
+import {SearchBar} from "../../components/forList/searchBar/SearchBar.tsx";
 import type {AdStatus, SortOption} from "../../types";
+import {Pagination} from "../../components/forList/pagination/Pagination.tsx";
 
 const ADS_PER_PAGE = 10;
-interface PaginationProps {
-    currentPage: number;
-    totalPages: number;
-    totalAds: number;
-    startIndex: number;
-    endIndex: number;
-    onPageChange: (page: number) => void;
-    onNextPage: () => void;
-    onPrevPage: () => void;
-}
-
-const Pagination = ({
-                        currentPage,
-                        totalPages,
-                        totalAds,
-                        startIndex,
-                        endIndex,
-                        onPageChange,
-                        onNextPage,
-                        onPrevPage
-                    }: PaginationProps) => {
-    if (totalPages <= 1) return null;
-
-    const getPageNumbers = () => {
-        const pages = [];
-        const maxVisiblePages = 5;
-
-        const startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
-        const endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
-
-        let adjustedStartPage = startPage;
-        if (endPage - startPage + 1 < maxVisiblePages) {
-            adjustedStartPage = Math.max(1, endPage - maxVisiblePages + 1);
-        }
-
-        for (let i = adjustedStartPage; i <= endPage; i++) {
-            pages.push(i);
-        }
-
-        return pages;
-    };
-
-    return (
-        <div className={styles.pagination}>
-            <div className={styles.paginationControls}>
-                <button
-                    className={styles.paginationButton}
-                    onClick={onPrevPage}
-                    disabled={currentPage === 1}
-                >
-                    Назад
-                </button>
-                {getPageNumbers().map(page => (
-                    <button
-                        key={page}
-                        className={`${styles.pageButton} ${currentPage === page ? styles.pageButtonActive : ''}`}
-                        onClick={() => onPageChange(page)}
-                    >
-                        {page}
-                    </button>
-                ))}
-
-                <button
-                    className={styles.paginationButton}
-                    onClick={onNextPage}
-                    disabled={currentPage === totalPages}
-                >
-                    Вперед
-                </button>
-            </div>
-            <div className={styles.paginationInfo}>
-                Показано {startIndex}-{endIndex} из {totalAds} объявлений
-            </div>
-        </div>
-    );
-};
-
 export const ListPage = () => {
     const [search, setSearch] = useState("");
     const [selectedStatus, setSelectedStatus] = useState<AdStatus[]>([]);
@@ -142,12 +66,9 @@ export const ListPage = () => {
         const totalAds = filteredAds.length;
         const totalPages = Math.ceil(totalAds / ADS_PER_PAGE);
 
-
-        // индексы для текущей страницы
         const startIndex = (currentPage - 1) * ADS_PER_PAGE;
         const endIndex = startIndex + ADS_PER_PAGE;
 
-        // объявления для текущей страницы
         const currentAds = filteredAds.slice(startIndex, endIndex);
 
         return {

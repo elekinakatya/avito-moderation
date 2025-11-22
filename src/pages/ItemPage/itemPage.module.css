@@ -1,0 +1,263 @@
+*:focus {
+    outline: none !important;
+}
+
+.page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+.navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    position: absolute;
+    top: 20px;
+    left: 30px;
+    right: 30px;
+    z-index: 1000;
+
+}
+
+.navButtons {
+    display: flex;
+    gap: 12px;
+}
+
+.navButton {
+    padding: 10px 16px;
+    border: 1px solid #00aaff;
+    border-radius: 6px;
+    background: #00aaff;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s;
+    min-width: 120px;
+}
+
+.navButton:hover:not(:disabled) {
+    background: #0099f7;
+    color: white;
+    border-color: #0099f7;
+}
+
+.navButton:disabled {
+    border-color: #70757a;
+    background: #70757a;
+    color: white;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+.backButton{
+    background: #00aaff;
+    color: white;
+
+}
+.backButton:hover {
+    border-color: #0099f7;
+    background: #0099f7;
+    color: white;
+
+}
+.title {
+    margin: 0 0 24px 0;
+    font-size: 24px;
+    font-weight: 600;
+    color: #212529;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.topContent {
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: 24px;
+    align-items: start;
+}
+
+.gallerySection {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid #e9ecef;
+    min-height: 400px;
+}
+.bottomContent {
+    grid-template-columns: 1fr 300px;
+    gap: 24px;
+    align-items: start;
+}
+.historyMod {
+    background: white;
+    border-radius: 12px;
+    border: 1px solid #e9ecef;
+    height: fit-content;
+}
+
+
+
+.moderationPanel {
+    background: white;
+    border-radius: 12px;
+    padding: 2px;
+    margin-top: 10px;
+}
+
+
+.moderationActions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.moderationButton {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s;
+    min-width: 160px;
+    height: 45px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    box-sizing: border-box;
+}
+
+.moderationButton:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.approveButton {
+    background: #97CF26;
+    color: white;
+}
+
+.approveButton:hover {
+    background: #83b520;
+}
+
+.rejectButton {
+    background: #FF6163;
+    color: white;
+}
+
+.rejectButton:hover {
+    background: #ea5758;
+}
+
+.improveButton {
+    background: #fd9a00;
+    color: white;
+}
+
+.improveButton:hover {
+    background: #ea8f02;
+}
+
+
+@media (max-width: 768px) {
+    .moderationPanel {
+        padding: 20px;
+        margin-top: 20px;
+    }
+
+
+    .moderationActions {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .moderationButton {
+        min-width: auto;
+        width: 100%;
+        height: 40px;
+    }
+}
+
+@media (max-width: 480px) {
+    .moderationPanel {
+        padding: 16px;
+        margin-top: 16px;
+    }
+
+    .moderationTitle {
+        font-size: 15px;
+        margin-bottom: 12px;
+    }
+
+    .moderationButton {
+        padding: 10px 16px;
+        font-size: 13px;
+        height: 36px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .page {
+        padding: 16px;
+    }
+
+    .topContent {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    .bottomContent {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .gallerySection {
+        min-height: 350px;
+    }
+}
+
+@media (max-width: 768px) {
+    .page {
+        padding: 12px;
+    }
+
+    .title {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+
+    .content {
+        gap: 20px;
+    }
+    .bottomContent {
+        gap: 16px;
+    }
+
+    .topContent {
+        gap: 16px;
+    }
+
+
+}
+
+/* Маленькие мобильные */
+@media (max-width: 480px) {
+    .page {
+        padding: 8px;
+    }
+
+    .title {
+        font-size: 18px;
+        margin-bottom: 16px;
+    }
+
+}

@@ -1,6 +1,6 @@
 import styles from "./Filters.module.css"
 import Select from 'react-select'
-import type {AdStatus, SortOption} from "../../types";
+import type {AdStatus, SortOption} from "../../../types";
 import * as React from "react";
 
 interface SortOptionType {
