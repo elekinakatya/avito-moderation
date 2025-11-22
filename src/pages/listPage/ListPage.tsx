@@ -6,6 +6,7 @@ import {useMemo, useState} from "react";
 import {SearchBar} from "../../components/forList/searchBar/SearchBar.tsx";
 import type {AdStatus, SortOption} from "../../types";
 import {Pagination} from "../../components/forList/pagination/Pagination.tsx";
+import {MainHeader} from "../../components/mainHeader/MainHeader.tsx";
 
 const ADS_PER_PAGE = 10;
 export const ListPage = () => {
@@ -110,6 +111,7 @@ export const ListPage = () => {
 
     return (
         <div className={styles.page}>
+            <MainHeader></MainHeader>
             <div className={styles.filtersSticky}>
                 <SearchBar onSearch={setSearch}></SearchBar>
             </div>

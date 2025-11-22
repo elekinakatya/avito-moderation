@@ -1,0 +1,102 @@
+.header {
+    background: #000000;
+    color: white;
+    padding: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 2000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.headerContent {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+    padding: 0 20px;
+}
+
+.logo {
+    font-size: 20px;
+    font-weight: 700;
+    color: white;
+}
+
+.nav {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+}
+
+
+.navLink {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 6px;
+    transition: all 0.2s;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.navLink:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.navLink.active {
+    background: #00aaff;
+}
+
+.navLink.active:hover {
+    background: #0099f7;
+    border-color: #0099f7;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .headerContent {
+        padding: 0 16px;
+        height: 56px;
+    }
+
+    .logo {
+        font-size: 18px;
+    }
+
+    .nav {
+        gap: 16px;
+    }
+
+    .navLink {
+        padding: 6px 12px;
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 480px) {
+    .headerContent {
+        padding: 0 12px;
+        height: 52px;
+    }
+
+    .logo {
+        font-size: 16px;
+    }
+
+    .nav {
+        gap: 12px;
+    }
+
+    .navLink {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+}

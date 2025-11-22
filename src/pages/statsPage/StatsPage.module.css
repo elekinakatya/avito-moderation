@@ -1,0 +1,107 @@
+.page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 70px 20px 20px;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+.header {
+    margin-bottom: 32px;
+    text-align: center;
+}
+
+.title {
+    margin: 24px 0 24px 0;
+    font-size: 32px;
+    font-weight: 700;
+    color: #212529;
+}
+
+.periodSelector {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+}
+
+.periodLabel {
+    font-size: 14px;
+    color: #6c757d;
+    font-weight: 500;
+}
+
+.metricsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.metricsRow {
+    display: flex;
+    gap: 16px;
+}
+
+.chartsGrid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 24px;
+    align-items: start;
+}
+
+.chartColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+@media (max-width: 1024px) {
+    .chartsGrid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .page {
+        padding: 92px 16px 16px;
+    }
+
+    .title {
+        font-size: 24px;
+        margin: 20px 0 20px 0;
+    }
+
+    .periodSelector {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .metricsRow {
+        gap: 12px;
+    }
+
+    .chartsGrid {
+        gap: 16px;
+    }
+
+    .chartColumn {
+        gap: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .page {
+        padding: 84px 12px 12px;
+    }
+
+    .title {
+        font-size: 20px;
+        margin: 16px 0 16px 0;
+    }
+
+    .metricsRow {
+        flex-direction: column;
+    }
+}

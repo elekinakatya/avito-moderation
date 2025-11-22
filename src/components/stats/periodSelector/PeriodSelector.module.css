@@ -1,0 +1,38 @@
+.selector {
+    display: flex;
+    gap: 8px;
+    background: #f8f9fa;
+    padding: 4px;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+}
+
+.option {
+    padding: 8px 16px;
+    border: none;
+    background: transparent;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    color: #6c757d;
+    transition: all 0.2s;
+    flex: 1;
+}
+
+.option:hover {
+    background: rgba(0, 170, 255, 0.1);
+    color: #00aaff;
+}
+
+.option.active {
+    background: #00aaff;
+    color: white;
+}
+
+@media (max-width: 480px) {
+    .option {
+        padding: 6px 12px;
+        font-size: 13px;
+    }
+}

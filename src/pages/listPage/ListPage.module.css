@@ -1,94 +1,51 @@
 .page {
-    padding-top: 80px;
+    padding-top: 120px;
     min-height: 100vh;
 }
 
-
 .content {
-    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 32px;
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 16px;
-    min-height: 600px;
-
+    align-items: start;
 }
 
-
 .sidebar {
-    position: fixed;
-    top: 112px;
-    left: 60px;
-    width: 350px;
+    position: sticky;
+    top: 140px;
     height: fit-content;
 }
 
-
 .main {
-    margin-left: 370px;
     min-width: 0;
-    width: calc(100% - 370px);
 }
-
-.cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
-    gap: 16px;
-    align-items: center;
-    justify-content: center;
-}
-
-.resultsInfo {
-    text-align: center;
-    margin: 0 0 16px 0;
-    padding: 12px 16px;
+.totalResults {
+    padding: 16px;
     background: #f0f8ff;
     border-radius: 8px;
     color: #1890ff;
-    font-weight: 500;
-    border-left: 4px solid #00aaff;
+    margin: 20px;
+}
+.empty{
+    padding: 16px;
+    background: #f0f8ff;
+    border-radius: 8px;
+    color: #1890ff;
+    margin: 20px;
+
 }
 
-
-
-@media (max-width: 1024px) {
-    .sidebar {
-        width: 300px;
-    }
-
-    .main {
-        margin-left: 320px;
-        width: calc(100% - 320px);
-    }
-
-    .cards {
-        grid-template-columns: 1fr;
-        max-width: 600px;
-        margin: 0 auto;
-    }
-}
 
 @media (max-width: 768px) {
-    .page {
-        padding-top: 70px;
-    }
-
     .content {
-        padding: 0 12px;
+        grid-template-columns: 1fr;
+        gap: 16px;
     }
 
     .sidebar {
         position: static;
-        width: 100%;
-        margin-bottom: 16px;
-    }
-
-    .main {
-        margin-left: 0;
-        width: 100%;
-    }
-
-    .cards {
-        grid-template-columns: 1fr;
-
     }
 }

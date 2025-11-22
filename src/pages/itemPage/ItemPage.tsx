@@ -8,6 +8,7 @@ import {Characteristics} from "../../characteristics/Characteristics.tsx";
 import {Description} from "../../components/forItem/description/Description.tsx";
 import {useEffect, useState} from "react";
 import {RejectModal} from "../../components/forItem/rejectModal/RejectModal.tsx";
+import {MainHeader} from "../../components/mainHeader/MainHeader.tsx";
 
 
 export const ItemPage = () => {
@@ -115,34 +116,36 @@ export const ItemPage = () => {
         };
     }, [isRejectModalOpen, currentIndex, navigate]);
 
-
-
-
     return (
         <div className={styles.page}>
+            <MainHeader></MainHeader>
             <div className={styles.navigation}>
-                <button
-                    className={styles.backButton}
-                    onClick={() => navigate('/list')}
-                >
-                    ← Назад к списку
-                </button>
+                <div className={styles.navigationLeft}>
+                    <button
+                        className={styles.backButton}
+                        onClick={() => navigate('/list')}
+                    >
+                        ← Назад к списку
+                    </button>
+                </div>
 
                 <div className={styles.navButtons}>
-                    <button
-                        className={`${styles.navButton} ${styles.prevButton}`}
-                        onClick={handlePrev}
-                        disabled={!prevAd}
-                    >
-                        ← Предыдущее
-                    </button>
-                    <button
-                        className={`${styles.navButton} ${styles.nextButton}`}
-                        onClick={handleNext}
-                        disabled={!nextAd}
-                    >
-                        Следующее →
-                    </button>
+                    <div className={styles.navigationRight}>
+                        <button
+                            className={`${styles.navButton} ${styles.prevButton}`}
+                            onClick={handlePrev}
+                            disabled={!prevAd}
+                        >
+                            ← Предыдущее
+                        </button>
+                        <button
+                            className={`${styles.navButton} ${styles.nextButton}`}
+                            onClick={handleNext}
+                            disabled={!nextAd}
+                        >
+                            Следующее →
+                        </button>
+                    </div>
                 </div>
             </div>
             <div className={styles.title}>

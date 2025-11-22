@@ -32,5 +32,6 @@ export interface Ad {
     moderationHistory: ModerationAction[];
 }
 
+
 export type AdStatus = 'pending' | 'approved' | 'rejected';
 export type SortOption = 'newest' | 'oldest' | 'price_asc' | 'price_desc' | 'priority_high';
