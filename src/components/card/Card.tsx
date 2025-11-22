@@ -46,27 +46,28 @@ export const Card = ({ad}: CardProps)=> {
                 />
             </div>
             <div className={styles.content}>
-                <h3 className={styles.title}>{ad.title}</h3>
-                {ad.priority === 'urgent' && ( <div className={styles.priorityBadge}>
-                    {getPriorityText(ad.priority)}
-                </div>)
-                   }
-                <div className={styles.price}>{formatPrice(ad.price)}</div>
-                <div className={styles.meta}>
-                    <span className={styles.category}>
-                        {ad.category}
-                    </span>
-                    <span className={styles.date}>
-                        {formatDate(ad.createdAt)}
-                    </span>
+                <div className={styles.textContent}>
+                    <h3 className={styles.title}>{ad.title}</h3>
+                    {ad.priority === 'urgent' && ( <div className={styles.priorityBadge}>
+                        {getPriorityText(ad.priority)}
+                    </div>)
+                       }
+                    <div className={styles.price}>{formatPrice(ad.price)}</div>
+                    <div className={styles.meta}>
+                        <span className={styles.category}>
+                            {ad.category}
+                        </span>
+                        <span className={styles.date}>
+                            {formatDate(ad.createdAt)}
+                        </span>
+                    </div>
+                    <div className={styles.status}>
+                        <span className={styles.statusBadge}
+                        style={{ backgroundColor: getColorStatus(ad.status) }}
+                        >{getStatusText(ad.status)}
+                        </span>
+                    </div>
                 </div>
-                <div className={styles.status}>
-                    <span className={styles.statusBadge}
-                    style={{ backgroundColor: getColorStatus(ad.status) }}
-                    >{getStatusText(ad.status)}
-                    </span>
-                </div>
-
             </div>
         </div>
     )

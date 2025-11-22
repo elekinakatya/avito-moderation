@@ -6,9 +6,11 @@
     transition: all 0.3s ease;
     border: 1px solid #e8e8e8;
     max-width: 500px;
+    width: 100%;
     display: flex;
     padding: 16px;
     position: relative;
+
 }
 
 .card:hover {
@@ -86,7 +88,12 @@
     color: #666;
     margin-top: auto;
 }
+.status {
+    display: flex;
+    align-items: center;
+    padding-top: 5px;
 
+}
 .statusBadge {
     color: white;
     padding: 4px 8px;
@@ -105,6 +112,29 @@
 .date {
     color: #666;
 }
+@media (max-width: 900px) {
+    .card {
+        padding: 12px;
+    }
+    .image {
+        width: 100px;
+        height: 100px;
+    }
+    .content {
+        gap: 12px;
+        padding-right: 50px;
+    }
+    .title {
+        font-size: 15px;
+        width: 200px;
+        overflow-wrap: break-word;
 
-
-
+    }
+    .price {
+        font-size: 16px;
+    }
+    .priceBadge {
+        font-size: 12px;
+        padding: 4px 8px;
+    }
+}

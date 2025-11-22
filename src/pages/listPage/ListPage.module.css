@@ -1,0 +1,165 @@
+.page {
+    padding-top: 80px;
+    min-height: 100vh;
+}
+
+
+.content {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 16px;
+    min-height: 600px;
+
+}
+
+
+.sidebar {
+    position: fixed;
+    top: 112px;
+    left: 60px;
+    width: 350px;
+    height: fit-content;
+}
+
+
+.main {
+    margin-left: 370px;
+    min-width: 0;
+    width: calc(100% - 370px);
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    gap: 16px;
+    align-items: center;
+    justify-content: center;
+}
+
+.resultsInfo {
+    text-align: center;
+    margin: 0 0 16px 0;
+    padding: 12px 16px;
+    background: #f0f8ff;
+    border-radius: 8px;
+    color: #1890ff;
+    font-weight: 500;
+    border-left: 4px solid #00aaff;
+}
+
+.empty {
+    text-align: center;
+    padding: 60px 40px;
+    color: #666;
+    font-size: 16px;
+    background: #fafafa;
+    border-radius: 8px;
+    border: 2px dashed #e8e8e8;
+    margin-bottom: 16px;
+}
+.pagination {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    margin-top: 32px;
+    padding: 20px 0;
+    border-top: 1px solid #e8e8e8;
+}
+
+.paginationInfo {
+    font-size: 14px;
+    color: #666;
+}
+
+.paginationControls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.paginationButton {
+    padding: 8px 16px;
+    border: 1px solid #ddd;
+    background: white;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+
+.paginationButton:hover:not(:disabled) {
+    background: #f5f5f5;
+    border-color: #00aaff;
+}
+
+.paginationButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.pageButton {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    background: white;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    min-width: 40px;
+    transition: all 0.2s;
+}
+
+.pageButton:hover {
+    background: #f5f5f5;
+    border-color: #00aaff;
+}
+
+.pageButtonActive {
+    background: #00aaff;
+    color: white;
+    border-color: #00aaff;
+}
+
+@media (max-width: 1024px) {
+    .sidebar {
+        width: 300px;
+    }
+
+    .main {
+        margin-left: 320px;
+        width: calc(100% - 320px);
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .page {
+        padding-top: 70px;
+    }
+
+    .content {
+        padding: 0 12px;
+    }
+
+    .sidebar {
+        position: static;
+        width: 100%;
+        margin-bottom: 16px;
+    }
+
+    .main {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
+
+    }
+}
