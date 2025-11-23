@@ -1,4 +1,4 @@
-import type {Advertisement} from "./models.ts";
+import type { Advertisement } from "../types/ads.ts";
 
 export interface AdsParams {
     page?: number;

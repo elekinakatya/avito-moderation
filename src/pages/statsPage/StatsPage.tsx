@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import styles from './StatsPage.module.css';
-import { periodOptions } from '../../mocks/statsData';
+import {PeriodOptions} from "../../types/stats";
 import { MetricCard } from '../../components/stats/metricCard/MetricCard.tsx';
 import { PeriodSelector } from '../../components/stats/periodSelector/PeriodSelector.tsx';
 import type { PeriodType } from '../../types/stats';
@@ -92,7 +92,7 @@ export const StatsPage = () => {
                 <div className={styles.periodSelector}>
                     <span className={styles.periodLabel}>Период:</span>
                     <PeriodSelector
-                        options={periodOptions}
+                        options={PeriodOptions}
                         selected={selectedPeriod}
                         onSelect={setSelectedPeriod}
                     />
@@ -127,7 +127,7 @@ export const StatsPage = () => {
                 <div className={styles.chartColumn}>
                     <ActivityChart
                         data={activityData}
-                        title={`Активность за ${periodOptions.find(p => p.value === selectedPeriod)?.label.toLowerCase()}`}
+                        title={`Активность за ${PeriodOptions.find(p => p.value === selectedPeriod)?.label.toLowerCase()}`}
                     />
                     <CategoryChart
                         data={categoriesData}

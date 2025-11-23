@@ -1,9 +1,5 @@
 export type PeriodType = 'today' | 'week' | 'month' | 'custom';
 
-export interface PeriodOption {
-    value: PeriodType;
-    label: string;
-}
 export interface DailyActivity {
     date: string;
     count: number;
@@ -33,7 +29,8 @@ export interface StatsData {
     categories: CategoryStats[];
 }
 
-export interface PeriodOption {
-    value: PeriodType;
-    label: string;
-}
+export const PeriodOptions = [
+    { value: 'today' as PeriodType, label: 'Сегодня' },
+    { value: 'week' as PeriodType, label: '7д' },
+    { value: 'month' as PeriodType, label: '30д' }
+];

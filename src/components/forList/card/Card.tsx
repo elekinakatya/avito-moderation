@@ -1,6 +1,6 @@
 import styles from "./Card.module.css"
 import {Link} from "react-router-dom";
-import type {Advertisement, PriorityLevel, AdStatus} from "../../../api/models.ts";
+import type { Advertisement, PriorityLevel, AdStatus } from "../../../types/ads.ts";
 
 interface CardProps {
     ad: Advertisement;

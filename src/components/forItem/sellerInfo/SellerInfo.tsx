@@ -1,5 +1,5 @@
 import styles from './SellerInfo.module.css';
-import type {Seller} from "../../../api/models.ts";
+import type { Seller } from "../../../types/ads.ts";
 
 interface SellerInfoProps {
     seller: Seller;

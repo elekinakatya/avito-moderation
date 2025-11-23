@@ -1,5 +1,5 @@
 import styles from "./History.module.css"
-import type {ModerationHistory} from "../../../api/models.ts";
+import type {ModerationHistory} from "../../../types/ads.ts";
 
 export const History = ({ actions }: { actions: ModerationHistory[] }) => {
     const getDecisionText = (decision: string) => {

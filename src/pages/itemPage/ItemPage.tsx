@@ -8,7 +8,7 @@ import {Description} from "../../components/forItem/description/Description.tsx"
 import {useEffect, useState} from "react";
 import {RejectModal} from "../../components/forItem/rejectModal/RejectModal.tsx";
 import {MainHeader} from "../../components/mainHeader/MainHeader.tsx";
-import type {Advertisement} from "../../api/models.ts";
+import type { Advertisement } from "../../types/ads.ts";
 import {approveAd, fetchAdById, fetchAds, rejectAd, requestChanges} from "../../api/ads.ts";
 
 export const ItemPage = () => {
