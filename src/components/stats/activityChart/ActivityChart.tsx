@@ -1,17 +1,18 @@
 import styles from './ActivityChart.module.css';
-
-interface DailyActivity {
-    date: string;
-    count: number;
-}
+import type {ActivityData} from "../../../api/stats.ts";
 
 interface ActivityChartProps {
-    data: DailyActivity[];
-    title?: string;
+    data: ActivityData[];
+    title: string;
 }
 
 export const ActivityChart = ({ data, title = "Активность по дням" }: ActivityChartProps) => {
-    const maxCount = Math.max(...data.map(item => item.count));
+    const dataWithCounts = data.map(item => ({
+        ...item,
+        count: item.approved + item.rejected + item.requestChanges
+    }));
+
+    const maxCount = Math.max(...dataWithCounts.map(item => item.count));
 
     const formatDate = (dateStr: string) => {
         return new Date(dateStr).toLocaleDateString('ru-RU', {
@@ -30,7 +31,7 @@ export const ActivityChart = ({ data, title = "Активность по дня�
             <h3 className={styles.title}>{title}</h3>
             <div className={styles.chartContainer}>
                 <div className={styles.bars}>
-                    {data.map((item, index) => {
+                    {dataWithCounts.map((item, index) => {
                         const height = getBarHeight(item.count);
                         return (
                             <div key={index} className={styles.barWrapper}>
@@ -38,7 +39,7 @@ export const ActivityChart = ({ data, title = "Активность по дня�
                                     <div
                                         className={styles.bar}
                                         style={{ height: `${height}%` }}
-                                        title={`${item.count} объявлений`}
+                                        title={`Всего: ${item.count} (Одобрено: ${item.approved}, Отклонено: ${item.rejected}, На доработку: ${item.requestChanges})`}
                                     >
                                         <div className={styles.barValue}>{item.count}</div>
                                     </div>

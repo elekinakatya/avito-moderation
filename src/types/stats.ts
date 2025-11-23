@@ -1,7 +1,15 @@
-export type PeriodType = 'today' | 'week' | 'month';
+export type PeriodType = 'today' | 'week' | 'month' | 'custom';
+
+export interface PeriodOption {
+    value: PeriodType;
+    label: string;
+}
 export interface DailyActivity {
     date: string;
     count: number;
+    approved: number;
+    rejected: number;
+    requestChanges: number;
 }
 export interface DecisionStats {
     status: 'approved' | 'rejected' | 'revision';

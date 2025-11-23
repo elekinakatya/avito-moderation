@@ -1,28 +1,26 @@
 import styles from './CategoryChart.module.css';
 
-interface CategoryStats {
-    category: string;
-    count: number;
-    percentage: number;
-}
-
 interface CategoryChartProps {
-    data: CategoryStats[];
+    data: Record<string, number>;
     title?: string;
 }
 
 export const CategoryChart = ({ data, title = "Распределение по категориям" }: CategoryChartProps) => {
-    const maxCount = Math.max(...data.map(item => item.count));
+    const categories = Object.entries(data);
+    const totalCount = categories.reduce((sum, [, count]) => sum + count, 0);
+    const maxCount = Math.max(...categories.map(([, count]) => count), 0);
 
     return (
         <div className={styles.chart}>
             <h3 className={styles.title}>{title}</h3>
             <div className={styles.bars}>
-                {data.map((item, index) => {
-                    const width = maxCount > 0 ? (item.count / maxCount) * 100 : 0;
+                {categories.map(([category, count], index) => {
+                    const percentage = totalCount > 0 ? (count / totalCount) * 100 : 0;
+                    const width = maxCount > 0 ? (count / maxCount) * 100 : 0;
+
                     return (
                         <div key={index} className={styles.barContainer}>
-                            <div className={styles.category}>{item.category}</div>
+                            <div className={styles.category}>{category}</div>
                             <div className={styles.barBackground}>
                                 <div
                                     className={styles.bar}
@@ -30,13 +28,16 @@ export const CategoryChart = ({ data, title = "Распределение по �
                                 />
                             </div>
                             <div className={styles.stats}>
-                                <span className={styles.count}>{item.count}</span>
-                                <span className={styles.percentage}>({item.percentage}%)</span>
+                                <span className={styles.count}>{count}</span>
+                                <span className={styles.percentage}>({percentage.toFixed(1)}%)</span>
                             </div>
                         </div>
                     );
                 })}
             </div>
+            {categories.length === 0 && (
+                <div className={styles.empty}>Нет данных по категориям</div>
+            )}
         </div>
     );
 };

@@ -1,17 +1,36 @@
 import styles from './PieChart.module.css';
 
-interface DecisionStats {
-    status: 'approved' | 'rejected' | 'revision';
-    count: number;
-    percentage: number;
-}
-
 interface PieChartProps {
-    data: DecisionStats[];
+    data: {
+        approved: number;
+        rejected: number;
+        requestChanges: number;
+    };
     title?: string;
 }
 
 export const PieChart = ({ data, title = "Распределение решений" }: PieChartProps) => {
+    // Преобразуем данные API в формат для компонента
+    const total = data.approved + data.rejected + data.requestChanges;
+
+    const chartData = [
+        {
+            status: 'approved' as const,
+            count: data.approved,
+            percentage: total > 0 ? (data.approved / total) * 100 : 0
+        },
+        {
+            status: 'rejected' as const,
+            count: data.rejected,
+            percentage: total > 0 ? (data.rejected / total) * 100 : 0
+        },
+        {
+            status: 'revision' as const,
+            count: data.requestChanges,
+            percentage: total > 0 ? (data.requestChanges / total) * 100 : 0
+        }
+    ];
+
     const getStatusColor = (status: string) => {
         switch (status) {
             case 'approved': return '#97CF26';
@@ -34,7 +53,7 @@ export const PieChart = ({ data, title = "Распределение решен�
         let gradient = '';
         let currentPercent = 0;
 
-        data.forEach((item, index) => {
+        chartData.forEach((item, index) => {
             const color = getStatusColor(item.status);
             const start = currentPercent;
             const end = currentPercent + item.percentage;
@@ -62,14 +81,14 @@ export const PieChart = ({ data, title = "Распределение решен�
                     />
                 </div>
                 <div className={styles.legend}>
-                    {data.map((item) => (
+                    {chartData.map((item) => (
                         <div key={item.status} className={styles.legendItem}>
                             <div
                                 className={styles.colorDot}
                                 style={{ backgroundColor: getStatusColor(item.status) }}
                             />
                             <span className={styles.label}>{getStatusText(item.status)}</span>
-                            <span className={styles.percentage}>{item.percentage}%</span>
+                            <span className={styles.percentage}>{item.percentage.toFixed(1)}%</span>
                             <span className={styles.count}>({item.count})</span>
                         </div>
                     ))}
