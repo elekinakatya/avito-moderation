@@ -1,9 +1,9 @@
 import styles from "./Card.module.css"
-import type {Ad} from "../../../types";
 import {Link} from "react-router-dom";
+import type {Advertisement, PriorityLevel, AdStatus} from "../../../api/models.ts";
 
 interface CardProps {
-    ad: Ad;
+    ad: Advertisement;
 }
 const formatDate = (date: string): string => {
     return new Date(date).toLocaleDateString('ru-RU', {
@@ -15,20 +15,25 @@ const formatDate = (date: string): string => {
 const formatPrice = (price: number): string => {
     return new Intl.NumberFormat('ru-RU').format(price)+' ₽';
 }
-const getStatusText = (status: Ad['status']): string => {
+const getStatusText = (status: AdStatus): string => {
     switch (status) {
-        case 'approved': return 'Одобрено';
-        case 'rejected': return 'Отклонено';
-        case 'pending': return 'На модерации';
+        case 'approved':
+            return 'Одобрено';
+        case 'rejected':
+            return 'Отклонено';
+        case 'pending':
+            return 'На модерации';
+        case 'draft':
+            return 'Черновик';
     }
-}
-const getPriorityText = (priority: Ad['priority']): string => {
+};
+const getPriorityText = (priority: PriorityLevel): string => {
     switch (priority) {
         case 'normal': return 'Обычный';
         case "urgent": return 'Срочный';
     }
 }
-const getColorStatus = (status: Ad['status']): string => {
+const getColorStatus = (status: AdStatus): string => {
     switch (status) {
         case 'approved': return '#97CF26';
         case 'rejected': return '#FF6163';

@@ -50,14 +50,14 @@ export const Filters = ({
         { value: 'priority_high', label: 'Срочные' },
     ];
     const categoryOptions: CategoryOption[] = [
-        { value: 'electronics', label: 'Электроника' },
-        { value: 'clothing', label: 'Одежда' },
-        { value: 'home', label: 'Дом и сад' },
-        { value: 'sports', label: 'Спорт и отдых' },
-        { value: 'auto', label: 'Авто' },
-        { value: 'realestate', label: 'Недвижимость' },
-        { value: 'services', label: 'Услуги' },
-        { value: 'jobs', label: 'Работа' },
+        { value: 'Электроника', label: 'Электроника' },
+        { value: 'Недвижимость', label: 'Недвижимость' },
+        { value: 'Транспорт', label: 'Транспорт' },
+        { value: 'Работа', label: 'Работа' },
+        { value: 'Услуги', label: 'Услуги' },
+        { value: 'Животные', label: 'Животные' },
+        { value: 'Мода', label: 'Мода' },
+        { value: 'Детское', label: 'Детское' },
     ];
     const handleStatusChange = (selectedStatus: readonly StatusOption[] | null) => {
         if (selectedStatus) {
