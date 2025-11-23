@@ -12,15 +12,15 @@ interface PaginationProps {
 }
 
 export const Pagination = ({
-                        currentPage,
-                        totalPages,
-                        totalAds,
-                        startIndex,
-                        endIndex,
-                        onPageChange,
-                        onNextPage,
-                        onPrevPage
-                    }: PaginationProps) => {
+   currentPage,
+   totalPages,
+   totalAds,
+   startIndex,
+   endIndex,
+   onPageChange,
+   onNextPage,
+   onPrevPage
+}: PaginationProps) => {
     if (totalPages <= 1) return null;
 
     const getPageNumbers = () => {
@@ -52,15 +52,44 @@ export const Pagination = ({
                 >
                     Назад
                 </button>
+
+                {getPageNumbers()[0] > 1 && (
+                    <>
+                        <button
+                            className={styles.pageButton}
+                            onClick={() => onPageChange(1)}
+                        >
+                            1
+                        </button>
+                        {getPageNumbers()[0] > 2 && (
+                            <span className={styles.pageDots}>...</span>
+                        )}
+                    </>
+                )}
+
                 {getPageNumbers().map(page => (
                     <button
                         key={page}
-                        className={`${styles.pageButton} ${currentPage === page ? styles.pageButtonActive : ''}`}
+                        className={`${styles.pageButton} ${currentPage === page ? styles.activePageButton : ''}`}
                         onClick={() => onPageChange(page)}
                     >
                         {page}
                     </button>
                 ))}
+
+                {getPageNumbers()[getPageNumbers().length - 1] < totalPages && (
+                    <>
+                        {getPageNumbers()[getPageNumbers().length - 1] < totalPages - 1 && (
+                            <span className={styles.pageDots}>...</span>
+                        )}
+                        <button
+                            className={styles.pageButton}
+                            onClick={() => onPageChange(totalPages)}
+                        >
+                            {totalPages}
+                        </button>
+                    </>
+                )}
 
                 <button
                     className={styles.paginationButton}

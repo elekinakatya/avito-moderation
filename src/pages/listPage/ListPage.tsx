@@ -7,6 +7,7 @@ import type {AdStatus, SortOption} from "../../types";
 import {Pagination} from "../../components/forList/pagination/Pagination.tsx";
 import {MainHeader} from "../../components/mainHeader/MainHeader.tsx";
 import {type AdsParams, type AdsResponse, fetchAds} from "../../api/ads.ts";
+import { useSearchParams } from "react-router-dom";
 
 const ADS_PER_PAGE = 10;
 
@@ -31,11 +32,17 @@ const categoryIdToName = (categoryId: number): string => {
 
 export const ListPage = () => {
     const [ads, setAds] = useState<AdsResponse>();
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    const initialPage = parseInt(searchParams.get('page') || '1');
+    const initialSearch = searchParams.get('search') || undefined;
+
     const [adsParams, setAdsParams] = useState<AdsParams>({
-        page: 1,
+        page: initialPage,
         limit: ADS_PER_PAGE,
         sortBy: 'createdAt',
-        sortOrder: 'desc'
+        sortOrder: 'desc',
+        search: initialSearch
     });
 
     const sortOptionToApiParams = (sortOption: SortOption): { sortBy: string; sortOrder: string } => {
@@ -55,65 +62,90 @@ export const ListPage = () => {
         }
     };
 
+    const updateUrlParams = (params: AdsParams) => {
+        const newSearchParams = new URLSearchParams();
+
+        if (params.page && params.page > 1) {
+            newSearchParams.set('page', params.page.toString());
+        }
+
+        if (params.search) {
+            newSearchParams.set('search', params.search);
+        }
+
+        setSearchParams(newSearchParams);
+    };
+
     const handleSearchChange = (search: string) => {
-        setAdsParams(prev => ({
-            ...prev,
+        const newParams = {
+            ...adsParams,
             search: search || undefined,
             page: 1
-        }));
+        };
+        setAdsParams(newParams);
     };
 
     const handleStatusChange = (status: AdStatus[]) => {
-        setAdsParams(prev => ({
-            ...prev,
+        const newParams = {
+            ...adsParams,
             status: status.length > 0 ? status : undefined,
             page: 1
-        }));
+        };
+        setAdsParams(newParams);
     };
 
     const handleCategoriesChange = (categories: string[]) => {
         const categoryIds = categories.map(categoryNameToId);
-        setAdsParams(prev => ({
-            ...prev,
+        const newParams = {
+            ...adsParams,
             categoryId: categoryIds.length > 0 ? categoryIds[0] : undefined,
             page: 1
-        }));
+        };
+        setAdsParams(newParams);
     };
 
     const handlePriceRangeChange = (priceRange: { min: number | null; max: number | null }) => {
-        setAdsParams(prev => ({
-            ...prev,
+        const newParams = {
+            ...adsParams,
             minPrice: priceRange.min || undefined,
             maxPrice: priceRange.max || undefined,
             page: 1
-        }));
+        };
+        setAdsParams(newParams);
     };
 
     const handleSortChange = (sort: SortOption) => {
         const { sortBy, sortOrder } = sortOptionToApiParams(sort);
-        setAdsParams(prev => ({
-            ...prev,
+        const newParams = {
+            ...adsParams,
             sortBy,
             sortOrder,
             page: 1
-        }));
+        };
+        setAdsParams(newParams);
     };
 
     const handlePageChange = (page: number) => {
-        setAdsParams(prev => ({
-            ...prev,
+        const newParams = {
+            ...adsParams,
             page
-        }));
+        };
+        setAdsParams(newParams);
     };
 
     const handleResetFilters = () => {
-        setAdsParams({
+        const newParams = {
             page: 1,
             limit: ADS_PER_PAGE,
             sortBy: 'createdAt',
             sortOrder: 'desc'
-        });
+        };
+        setAdsParams(newParams);
     };
+
+    useEffect(() => {
+        updateUrlParams(adsParams);
+    }, [adsParams]);
 
     useEffect(() => {
         (async () => {
