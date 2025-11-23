@@ -1,12 +1,8 @@
 import styles from './SellerInfo.module.css';
+import type {Seller} from "../../../api/models.ts";
 
 interface SellerInfoProps {
-    seller: {
-        name: string;
-        rating: number;
-        adsCount: number;
-        registrationDate: string;
-    };
+    seller: Seller;
 }
 
 export const SellerInfo = ({ seller }: SellerInfoProps) => {
@@ -33,17 +29,17 @@ export const SellerInfo = ({ seller }: SellerInfoProps) => {
 
                 <div className={styles.sellerStats}>
                     <div className={styles.stat}>
-                        <span className={styles.statValue}>{seller.adsCount}</span>
+                        <span className={styles.statValue}>{seller.totalAds}</span>
                         <span className={styles.statLabel}>объявлений</span>
                     </div>
                     <div className={styles.stat}>
-                        <span className={styles.statValue}>{getRegistrationDuration(seller.registrationDate)}</span>
+                        <span className={styles.statValue}>{getRegistrationDuration(seller.registeredAt)}</span>
                         <span className={styles.statLabel}>лет на сайте</span>
                     </div>
                 </div>
 
                 <div className={styles.registrationDate}>
-                    Дата регистрации: {formatDate(seller.registrationDate)}
+                    Дата регистрации: {formatDate(seller.registeredAt)}
                 </div>
             </div>
         </div>

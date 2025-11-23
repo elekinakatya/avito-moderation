@@ -6,11 +6,16 @@ export interface Characteristic {
 }
 
 interface CharacteristicsProps {
-    characteristics: Characteristic[];
+    characteristics: { [key: string]: string }
 }
 
 export const Characteristics = ({ characteristics }: CharacteristicsProps) => {
-    if (!characteristics || characteristics.length === 0) {
+    const characteristicsArray = Object.entries(characteristics).map(([key, value]) => ({
+        key,
+        value
+    }));
+
+    if (!characteristics || characteristicsArray.length === 0) {
         return (
             <div className={styles.characteristics}>
                 <h3 className={styles.title}>Характеристики</h3>
@@ -27,7 +32,7 @@ export const Characteristics = ({ characteristics }: CharacteristicsProps) => {
             <div className={styles.tableContainer}>
                 <table className={styles.table}>
                     <tbody>
-                    {characteristics.map((char, index) => (
+                    {characteristicsArray.map((char, index) => (
                         <tr key={index} className={styles.row}>
                             <td className={styles.key}>{char.key}</td>
                             <td className={styles.value}>{char.value}</td>

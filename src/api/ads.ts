@@ -1,4 +1,4 @@
-import type { Advertisement } from "./models.ts";
+import type {Advertisement} from "./models.ts";
 
 export interface AdsParams {
     page?: number;
@@ -42,8 +42,23 @@ export const fetchAds = async (params: AdsParams = {}): Promise<AdsResponse> => 
             throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        const data: AdsResponse = await response.json();
-        return data;
+        return await response.json();
+    } catch (error) {
+        console.error('Error fetching ads:', error);
+        throw error;
+    }
+};
+
+export const fetchAdById = async (id: number | string): Promise<Advertisement> => {
+    try {
+        const url = `/api/ads/${id}`;
+        const response = await fetch(url);
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        return await response.json();
     } catch (error) {
         console.error('Error fetching ads:', error);
         throw error;

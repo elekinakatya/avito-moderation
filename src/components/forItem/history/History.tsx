@@ -1,13 +1,7 @@
 import styles from "./History.module.css"
-import type {ModerationAction} from "../../../types";
+import type {ModerationHistory} from "../../../api/models.ts";
 
-
-
-interface HistoryProps {
-    actions: ModerationAction[];
-}
-
-export const History = ({ actions }: HistoryProps) => {
+export const History = ({ actions }: { actions: ModerationHistory[] }) => {
     const getDecisionText = (decision: string) => {
         switch (decision) {
             case 'approved':
@@ -68,11 +62,11 @@ export const History = ({ actions }: HistoryProps) => {
                                     {action.moderatorName}
                                 </span>
                                 <span className={styles.actionDate}>
-                                    {formatDate(action.actionDate)}
+                                    {formatDate(action.timestamp)}
                                 </span>
                             </div>
-                            <div className={`${styles.decision} ${getDecisionColor(action.decision)}`}>
-                                {getDecisionText(action.decision)}
+                            <div className={`${styles.decision} ${getDecisionColor(action.action)}`}>
+                                {getDecisionText(action.action)}
                             </div>
                         </div>
 

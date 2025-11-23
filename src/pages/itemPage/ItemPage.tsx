@@ -1,6 +1,5 @@
 import {Gallery} from "../../components/forItem/gallery/Gallery.tsx";
 import styles from "./itemPage.module.css"
-import { mockAds } from '../../mocks/data'
 import {useNavigate, useParams} from "react-router-dom";
 import {History} from "../../components/forItem/history/History.tsx";
 import {SellerInfo} from "../../components/forItem/sellerInfo/SellerInfo.tsx";
@@ -9,13 +8,36 @@ import {Description} from "../../components/forItem/description/Description.tsx"
 import {useEffect, useState} from "react";
 import {RejectModal} from "../../components/forItem/rejectModal/RejectModal.tsx";
 import {MainHeader} from "../../components/mainHeader/MainHeader.tsx";
-
+import type {Advertisement} from "../../api/models.ts";
+import {fetchAdById, fetchAds} from "../../api/ads.ts";
 
 export const ItemPage = () => {
     const {id} = useParams<{id: string}>();
-    const ad = mockAds.find(ad => ad.id === id);
+    const [ad, setAd] = useState<Advertisement>();
+    const [allAds, setAllAds] = useState<Advertisement[]>([]);
     const navigate = useNavigate();
     const [isRejectModalOpen, setIsRejectModalOpen] = useState(false);
+
+    useEffect(() => {
+        (async () => {
+            if (!id) return;
+            try {
+                const adResponse = await fetchAdById(id);
+                setAd(adResponse);
+
+                // да плохо, да говно, я понимаю,
+                // но это надо, чтобы показывать есть ли предыдущее/следующее,
+                // тк бек отдает не полную инфу в пагинации
+                const adsResponse = await fetchAds({
+                    page: 1,
+                    limit: 1000
+                });
+                setAllAds(adsResponse.ads);
+            } catch (e) {
+                console.error(e);
+            }
+        })();
+    }, [id]);
 
     if (!ad) {
         return (
@@ -33,92 +55,93 @@ export const ItemPage = () => {
         );
     }
 
-    const currentIndex = mockAds.findIndex(item => item.id === id);
-    const prevAd = currentIndex > 0 ? mockAds[currentIndex - 1] : null;
-    const nextAd = currentIndex < mockAds.length - 1 ? mockAds[currentIndex + 1] : null;
+    const currentIndex = allAds.findIndex(item => item.id.toString() === id);
+    const hasPrev = currentIndex > 0;
+    const hasNext = currentIndex < allAds.length - 1 && currentIndex !== -1;
 
-    const handleApprove = () => {
-        console.log('Одобрить объявление:', ad.id);
+    const handleApprove = (id: number) => {
+        console.log('Одобрить объявление:', id);
     }
 
     const handleReject = () => {
         setIsRejectModalOpen(true);
     };
 
-    const handleConfirmReject = (reason: string) => {
-        console.log('Отклонить объявление:', ad.id, 'Причина:', reason);
+    const handleConfirmReject = (id: number, reason: string) => {
+        console.log('Отклонить объявление:', id, 'Причина:', reason);
+        setIsRejectModalOpen(false);
     };
 
-    const handleImprove = () => {
-        console.log('Отправить на доработку:', ad.id);
+    const handleImprove = (id: number) => {
+        console.log('Отправить на доработку:', id);
     };
 
     const handlePrev = () => {
-        if (prevAd) {
+        if (hasPrev) {
+            const prevAd = allAds[currentIndex - 1];
             navigate(`/item/${prevAd.id}`);
         }
     };
 
     const handleNext = () => {
-        if (nextAd) {
+        if (hasNext) {
+            const nextAd = allAds[currentIndex + 1];
             navigate(`/item/${nextAd.id}`);
         }
     };
 
-    // useEffect ДОЛЖЕН использовать актуальные значения
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    useEffect(() => {
-        const handleKeyPress = (event: KeyboardEvent) => {
-            if (isRejectModalOpen || document.activeElement?.tagName === 'INPUT' || document.activeElement?.tagName === 'TEXTAREA') {
-                return;
-            }
-
-            switch (event.key.toLowerCase()) {
-                case 'a':
-                    event.preventDefault();
-                    handleApprove();
-                    break;
-                case 'd':
-                    event.preventDefault();
-                    handleReject();
-                    break;
-            }
-        };
-
-        const handleKeyDown = (event: KeyboardEvent) => {
-            if (isRejectModalOpen || document.activeElement?.tagName === 'INPUT' || document.activeElement?.tagName === 'TEXTAREA') {
-                return;
-            }
-
-            switch (event.key) {
-                case 'ArrowLeft':
-                    event.preventDefault();
-                    // Вызываем handlePrev напрямую
-                    if (currentIndex > 0) {
-                        navigate(`/item/${mockAds[currentIndex - 1].id}`);
-                    }
-                    break;
-                case 'ArrowRight':
-                    event.preventDefault();
-                    // Вызываем handleNext напрямую
-                    if (currentIndex < mockAds.length - 1) {
-                        navigate(`/item/${mockAds[currentIndex + 1].id}`);
-                    }
-                    break;
-            }
-        };
-
-        document.addEventListener('keypress', handleKeyPress);
-        document.addEventListener('keydown', handleKeyDown);
-        return () => {
-            document.removeEventListener('keypress', handleKeyPress);
-            document.removeEventListener('keydown', handleKeyDown);
-        };
-    }, [isRejectModalOpen, currentIndex, navigate]);
+    // обработка клавиш пока скип, может потом доделаю, не сердчайте
+    // useEffect(() => {
+    //     const handleKeyPress = (event: KeyboardEvent) => {
+    //         if (isRejectModalOpen || document.activeElement?.tagName === 'INPUT' || document.activeElement?.tagName === 'TEXTAREA') {
+    //             return;
+    //         }
+    //
+    //         switch (event.key.toLowerCase()) {
+    //             case 'a':
+    //                 event.preventDefault();
+    //                 handleApprove(ad.id);
+    //                 break;
+    //             case 'd':
+    //                 event.preventDefault();
+    //                 handleReject();
+    //                 break;
+    //             case 'r':
+    //                 event.preventDefault();
+    //                 handleImprove(ad.id);
+    //                 break;
+    //         }
+    //     };
+    //
+    //     const handleKeyDown = (event: KeyboardEvent) => {
+    //         if (isRejectModalOpen || document.activeElement?.tagName === 'INPUT' || document.activeElement?.tagName === 'TEXTAREA') {
+    //             return;
+    //         }
+    //
+    //         switch (event.key) {
+    //             case 'ArrowLeft':
+    //                 event.preventDefault();
+    //                 handlePrev();
+    //                 break;
+    //             case 'ArrowRight':
+    //                 event.preventDefault();
+    //                 handleNext();
+    //                 break;
+    //         }
+    //     };
+    //
+    //     document.addEventListener('keypress', handleKeyPress);
+    //     document.addEventListener('keydown', handleKeyDown);
+    //
+    //     return () => {
+    //         document.removeEventListener('keypress', handleKeyPress);
+    //         document.removeEventListener('keydown', handleKeyDown);
+    //     };
+    // }, [isRejectModalOpen, ad, hasPrev, hasNext, currentIndex, allAds]);
 
     return (
         <div className={styles.page}>
-            <MainHeader></MainHeader>
+            <MainHeader />
             <div className={styles.navigation}>
                 <div className={styles.navigationLeft}>
                     <button
@@ -134,14 +157,14 @@ export const ItemPage = () => {
                         <button
                             className={`${styles.navButton} ${styles.prevButton}`}
                             onClick={handlePrev}
-                            disabled={!prevAd}
+                            disabled={!hasPrev}
                         >
                             ← Предыдущее
                         </button>
                         <button
                             className={`${styles.navButton} ${styles.nextButton}`}
                             onClick={handleNext}
-                            disabled={!nextAd}
+                            disabled={!hasNext}
                         >
                             Следующее →
                         </button>
@@ -168,13 +191,13 @@ export const ItemPage = () => {
                 <div className={styles.bottomContent}>
                     <Characteristics characteristics={ad.characteristics} />
                     <Description description={ad.description} />
-                    <SellerInfo seller={ad.seller} ></SellerInfo>
+                    <SellerInfo seller={ad.seller} />
                 </div>
                 <div className={styles.moderationPanel}>
                     <div className={styles.moderationActions}>
                         <button
                             className={`${styles.moderationButton} ${styles.approveButton}`}
-                            onClick={handleApprove}
+                            onClick={() => handleApprove(ad.id)}
                         >
                             Одобрить
                         </button>
@@ -186,7 +209,7 @@ export const ItemPage = () => {
                         </button>
                         <button
                             className={`${styles.moderationButton} ${styles.improveButton}`}
-                            onClick={handleImprove}
+                            onClick={() => handleImprove(ad.id)}
                         >
                             Вернуть на доработку
                         </button>
@@ -196,10 +219,8 @@ export const ItemPage = () => {
             <RejectModal
                 isOpen={isRejectModalOpen}
                 onClose={() => setIsRejectModalOpen(false)}
-                onConfirm={handleConfirmReject}
+                onConfirm={(reason) => handleConfirmReject(ad.id, reason)}
             />
-
         </div>
-
     )
 }
