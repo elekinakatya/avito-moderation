@@ -31,7 +31,7 @@ export interface DecisionsData {
 
 export const fetchStatsSummary = async (params: StatsParams = {}): Promise<StatsSummary> => {
     try {
-        const url = new URL('/api/stats/summary', window.location.origin);
+        const url = new URL('/api/v1/stats/summary', window.location.origin);
 
         Object.entries(params).forEach(([key, value]) => {
             if (value !== undefined && value !== null) {
@@ -54,7 +54,7 @@ export const fetchStatsSummary = async (params: StatsParams = {}): Promise<Stats
 
 export const fetchActivityData = async (params: StatsParams = {}): Promise<ActivityData[]> => {
     try {
-        const url = new URL('/api/stats/chart/activity', window.location.origin);
+        const url = new URL('/api/v1/stats/chart/activity', window.location.origin);
 
         Object.entries(params).forEach(([key, value]) => {
             if (value !== undefined && value !== null) {
@@ -77,7 +77,7 @@ export const fetchActivityData = async (params: StatsParams = {}): Promise<Activ
 
 export const fetchDecisionsData = async (params: StatsParams = {}): Promise<DecisionsData> => {
     try {
-        const url = new URL('/api/stats/chart/decisions', window.location.origin);
+        const url = new URL('/api/v1/stats/chart/decisions', window.location.origin);
 
         Object.entries(params).forEach(([key, value]) => {
             if (value !== undefined && value !== null) {
@@ -100,7 +100,7 @@ export const fetchDecisionsData = async (params: StatsParams = {}): Promise<Deci
 
 export const fetchCategoriesData = async (params: StatsParams = {}): Promise<Record<string, number>> => {
     try {
-        const url = new URL('/api/stats/chart/categories', window.location.origin);
+        const url = new URL('/api/v1/stats/chart/categories', window.location.origin);
 
         Object.entries(params).forEach(([key, value]) => {
             if (value !== undefined && value !== null) {

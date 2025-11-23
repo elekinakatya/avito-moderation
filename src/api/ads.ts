@@ -49,7 +49,7 @@ export interface RequestChangesResponse {
 
 export const fetchAds = async (params: AdsParams = {}): Promise<AdsResponse> => {
     try {
-        const url = new URL('/api/ads', window.location.origin);
+        const url = new URL('/api/v1/ads', window.location.origin);
 
         Object.entries(params).forEach(([key, value]) => {
             if (value !== undefined && value !== null) {
@@ -76,7 +76,7 @@ export const fetchAds = async (params: AdsParams = {}): Promise<AdsResponse> => 
 
 export const fetchAdById = async (id: number | string): Promise<Advertisement> => {
     try {
-        const url = `/api/ads/${id}`;
+        const url = `/api/v1/ads/${id}`;
         const response = await fetch(url);
 
         if (!response.ok) {
@@ -92,7 +92,7 @@ export const fetchAdById = async (id: number | string): Promise<Advertisement> =
 
 export const approveAd = async (id: number): Promise<ApproveAdResponse> => {
     try {
-        const response = await fetch(`/api/ads/${id}/approve`, {
+        const response = await fetch(`/api/v1/ads/${id}/approve`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -115,7 +115,7 @@ export const approveAd = async (id: number): Promise<ApproveAdResponse> => {
 
 export const rejectAd = async (id: number, data: RejectAdRequest): Promise<RejectAdResponse> => {
     try {
-        const response = await fetch(`/api/ads/${id}/reject`, {
+        const response = await fetch(`/api/v1/ads/${id}/reject`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -139,7 +139,7 @@ export const rejectAd = async (id: number, data: RejectAdRequest): Promise<Rejec
 
 export const requestChanges = async (id: number, data: RequestChangesRequest): Promise<RequestChangesResponse> => {
     try {
-        const response = await fetch(`/api/ads/${id}/request-changes`, {
+        const response = await fetch(`/api/v1/ads/${id}/request-changes`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
