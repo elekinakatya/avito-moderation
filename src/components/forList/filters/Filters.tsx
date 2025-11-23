@@ -67,10 +67,9 @@ export const Filters = ({
             onStatusChange([])
         }
     }
-    const handleCategoriesChange = (selectedOptions: readonly CategoryOption[] | null) => {
-        if (selectedOptions) {
-            const selectedValue = selectedOptions.map(option => option.value);
-            onCategoriesChange(selectedValue);
+    const handleCategoriesChange = (selectedCategory: CategoryOption | null) => {
+        if (selectedCategory) {
+            onCategoriesChange([selectedCategory.value]);
         } else {
             onCategoriesChange([])
         }
@@ -130,7 +129,6 @@ export const Filters = ({
                 <div className={styles.filterGroup}>
                     <label>Категория</label>
                     <Select
-                        isMulti
                         name="categories"
                         value={getSelectedCategoryOptions()}
                         options={categoryOptions}

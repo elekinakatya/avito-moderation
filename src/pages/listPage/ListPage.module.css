@@ -22,9 +22,12 @@
 .main {
     min-width: 0;
 }
+.cards{
+    display: grid;
+    gap: 16px;
+}
 .totalResults {
-    padding: 16px;
-    background: #f0f8ff;
+    padding: 14px;
     border-radius: 8px;
     color: #1890ff;
     margin: 20px;

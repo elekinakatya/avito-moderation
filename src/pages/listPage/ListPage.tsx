@@ -242,25 +242,20 @@ export const ListPage = () => {
                             <Card key={ad.id} ad={ad}/>
                         ))}
                     </div>
-
-                    {paginationData.totalPages > 0 && (
-                        <Pagination
-                            currentPage={adsParams.page || 1}
-                            totalPages={paginationData.totalPages}
-                            totalAds={paginationData.totalAds}
-                            startIndex={paginationData.startIndex}
-                            endIndex={paginationData.endIndex}
-                            onPageChange={handlePageChange}
-                            onNextPage={goToNextPage}
-                            onPrevPage={goToPrevPage}
-                        />
-                    )}
-
-                    {paginationData.totalAds > 0 && (
-                        <div className={styles.totalResults}>
-                            Всего найдено: {paginationData.totalAds} объявлений
-                        </div>
-                    )}
+                    <div className={styles.totalResults}>
+                        {paginationData.totalPages > 0 && (
+                            <Pagination
+                                currentPage={adsParams.page || 1}
+                                totalPages={paginationData.totalPages}
+                                totalAds={paginationData.totalAds}
+                                startIndex={paginationData.startIndex}
+                                endIndex={paginationData.endIndex}
+                                onPageChange={handlePageChange}
+                                onNextPage={goToNextPage}
+                                onPrevPage={goToPrevPage}
+                            />
+                        )}
+                    </div>
                 </main>
             </div>
         </div>

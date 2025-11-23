@@ -43,41 +43,41 @@ const getColorStatus = (status: AdStatus): string => {
 }
 export const Card = ({ad}: CardProps)=> {
     return (
-        <div className={styles.card}>
-            <div className={styles.image}>
-                <img
-                    src={ad.images[0]}
-                    alt={ad.title}
-                    className={styles.image}
-                />
-            </div>
-            <div className={styles.content}>
-                <div className={styles.textContent}>
-                    <h3 className={styles.title}>{ad.title}</h3>
-                    {ad.priority === 'urgent' && ( <div className={styles.priorityBadge}>
-                        {getPriorityText(ad.priority)}
-                    </div>)
-                       }
-                    <div className={styles.price}>{formatPrice(ad.price)}</div>
-                    <div className={styles.meta}>
-                        <span className={styles.category}>
-                            {ad.category}
-                        </span>
-                        <span className={styles.date}>
-                            {formatDate(ad.createdAt)}
-                        </span>
+        <Link to={`/item/${ad.id}`} className="cardLink">
+            <div className={styles.card}>
+                <div className={styles.image}>
+                    <img
+                        src={ad.images[0]}
+                        alt={ad.title}
+                        className={styles.image}
+                    />
+                </div>
+                <div className={styles.content}>
+                    <div className={styles.textContent}>
+                        <h3 className={styles.title}>{ad.title}</h3>
+                        {ad.priority === 'urgent' && ( <div className={styles.priorityBadge}>
+                            {getPriorityText(ad.priority)}
+                        </div>)
+                           }
+                        <div className={styles.price}>{formatPrice(ad.price)}</div>
+                        <div className={styles.meta}>
+                            <span className={styles.category}>
+                                {ad.category}
+                            </span>
+                            <span className={styles.date}>
+                                {formatDate(ad.createdAt)}
+                            </span>
+                        </div>
+                        <div className={styles.status}>
+                            <span className={styles.statusBadge}
+                            style={{ backgroundColor: getColorStatus(ad.status) }}
+                            >{getStatusText(ad.status)}
+                            </span>
+                        </div>
+                        <div className={styles.openButton}> Открыть →</div>
                     </div>
-                    <div className={styles.status}>
-                        <span className={styles.statusBadge}
-                        style={{ backgroundColor: getColorStatus(ad.status) }}
-                        >{getStatusText(ad.status)}
-                        </span>
-                    </div>
-                    <Link to={`/item/${ad.id}`} className={styles.openButton}>
-                        Открыть →
-                    </Link>
                 </div>
             </div>
-        </div>
+        </Link>
     )
 }
