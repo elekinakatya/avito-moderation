@@ -8,7 +8,7 @@ export const History = ({ actions }: { actions: ModerationHistory[] }) => {
                 return 'Одобрено';
             case 'rejected':
                 return 'Отклонено';
-            case 'revision':
+            case 'requestChanges':
                 return 'Возврат на доработку';
             default:
                 return decision;
@@ -21,7 +21,7 @@ export const History = ({ actions }: { actions: ModerationHistory[] }) => {
                 return styles.approved;
             case 'rejected':
                 return styles.rejected;
-            case 'revision':
+            case 'requestChanges':
                 return styles.revision;
             default:
                 return '';

@@ -22,6 +22,31 @@ export interface AdsResponse {
     };
 }
 
+export interface ApproveAdResponse {
+    message: string;
+    ad: Advertisement;
+}
+
+export interface RejectAdRequest {
+    reason: string;
+    comment?: string;
+}
+
+export interface RejectAdResponse {
+    message: string;
+    ad: Advertisement;
+}
+
+export interface RequestChangesRequest {
+    reason: string;
+    comment?: string;
+}
+
+export interface RequestChangesResponse {
+    message: string;
+    ad: Advertisement;
+}
+
 export const fetchAds = async (params: AdsParams = {}): Promise<AdsResponse> => {
     try {
         const url = new URL('/api/ads', window.location.origin);
@@ -61,6 +86,77 @@ export const fetchAdById = async (id: number | string): Promise<Advertisement> =
         return await response.json();
     } catch (error) {
         console.error('Error fetching ads:', error);
+        throw error;
+    }
+};
+
+export const approveAd = async (id: number): Promise<ApproveAdResponse> => {
+    try {
+        const response = await fetch(`/api/ads/${id}/approve`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            if (response.status === 404) {
+                throw new Error(`Объявление с ID ${id} не найдено`);
+            }
+            throw new Error(`Ошибка сервера: ${response.status}`);
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Error approving ad:', error);
+        throw error;
+    }
+};
+
+export const rejectAd = async (id: number, data: RejectAdRequest): Promise<RejectAdResponse> => {
+    try {
+        const response = await fetch(`/api/ads/${id}/reject`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        });
+
+        if (!response.ok) {
+            if (response.status === 404) {
+                throw new Error(`Объявление с ID ${id} не найдено`);
+            }
+            throw new Error(`Ошибка сервера: ${response.status}`);
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Error rejecting ad:', error);
+        throw error;
+    }
+};
+
+export const requestChanges = async (id: number, data: RequestChangesRequest): Promise<RequestChangesResponse> => {
+    try {
+        const response = await fetch(`/api/ads/${id}/request-changes`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        });
+
+        if (!response.ok) {
+            if (response.status === 404) {
+                throw new Error(`Объявление с ID ${id} не найдено`);
+            }
+            throw new Error(`Ошибка сервера: ${response.status}`);
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Error requesting changes for ad:', error);
         throw error;
     }
 };

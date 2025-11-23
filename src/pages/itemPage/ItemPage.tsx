@@ -9,7 +9,7 @@ import {useEffect, useState} from "react";
 import {RejectModal} from "../../components/forItem/rejectModal/RejectModal.tsx";
 import {MainHeader} from "../../components/mainHeader/MainHeader.tsx";
 import type {Advertisement} from "../../api/models.ts";
-import {fetchAdById, fetchAds} from "../../api/ads.ts";
+import {approveAd, fetchAdById, fetchAds, rejectAd, requestChanges} from "../../api/ads.ts";
 
 export const ItemPage = () => {
     const {id} = useParams<{id: string}>();
@@ -60,7 +60,9 @@ export const ItemPage = () => {
     const hasNext = currentIndex < allAds.length - 1 && currentIndex !== -1;
 
     const handleApprove = (id: number) => {
-        console.log('Одобрить объявление:', id);
+        approveAd(id).then((res) => {
+            alert(res.message);
+        });
     }
 
     const handleReject = () => {
@@ -68,12 +70,17 @@ export const ItemPage = () => {
     };
 
     const handleConfirmReject = (id: number, reason: string) => {
-        console.log('Отклонить объявление:', id, 'Причина:', reason);
+        rejectAd(id, {reason: reason}).then((res) => {
+            alert(res.message);
+        });
         setIsRejectModalOpen(false);
     };
 
     const handleImprove = (id: number) => {
-        console.log('Отправить на доработку:', id);
+        // TODO: send request changes with proper comment for user
+        requestChanges(id, {reason: 'Комментарий'}).then((res) => {
+            alert(res.message);
+        });
     };
 
     const handlePrev = () => {
