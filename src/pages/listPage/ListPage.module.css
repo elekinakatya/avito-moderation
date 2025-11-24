@@ -17,6 +17,11 @@
     position: sticky;
     top: 140px;
     height: fit-content;
+    min-width: 300px;
+    max-width: 200px;
+    width: auto;
+    flex-shrink: 0;
+    align-self: flex-start;
 }
 
 .main {

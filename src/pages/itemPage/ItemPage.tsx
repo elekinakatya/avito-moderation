@@ -17,8 +17,26 @@ export const ItemPage = () => {
     const [allAds, setAllAds] = useState<Advertisement[]>([]);
     const navigate = useNavigate();
     const [isRejectModalOpen, setIsRejectModalOpen] = useState(false);
+    const [refreshTrigger, setRefreshTrigger] = useState(0);
+
+    const loadAdData = async () => {
+        if (!id) return;
+        try {
+            const adResponse = await fetchAdById(id);
+            setAd(adResponse);
+
+            const adsResponse = await fetchAds({
+                page: 1,
+                limit: 1000
+            });
+            setAllAds(adsResponse.ads);
+        } catch (e) {
+            console.error(e);
+        }
+    };
 
     useEffect(() => {
+        loadAdData();
         (async () => {
             if (!id) return;
             try {
@@ -37,7 +55,8 @@ export const ItemPage = () => {
                 console.error(e);
             }
         })();
-    }, [id]);
+    }, [id, refreshTrigger]);
+
 
     if (!ad) {
         return (
@@ -62,6 +81,7 @@ export const ItemPage = () => {
     const handleApprove = (id: number) => {
         approveAd(id).then((res) => {
             alert(res.message);
+            setRefreshTrigger(prev => prev + 1);
         });
     }
 
@@ -72,6 +92,7 @@ export const ItemPage = () => {
     const handleConfirmReject = (id: number, reason: string) => {
         rejectAd(id, {reason: reason}).then((res) => {
             alert(res.message);
+            setRefreshTrigger(prev => prev + 1);
         });
         setIsRejectModalOpen(false);
     };
@@ -80,6 +101,7 @@ export const ItemPage = () => {
         // TODO: send request changes with proper comment for user
         requestChanges(id, {reason: 'Комментарий'}).then((res) => {
             alert(res.message);
+            setRefreshTrigger(prev => prev + 1);
         });
     };
 
